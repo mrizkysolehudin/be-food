@@ -1,7 +1,7 @@
 const categoryModel = require("../models/categoryModel.js");
 
 const categoryController = {
-	getAllCategory: (req, res) => {
+	getAllCategories: (req, res) => {
 		categoryModel
 			.selectAllCategories()
 			.then((result) => {

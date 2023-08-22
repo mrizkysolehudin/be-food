@@ -16,18 +16,15 @@ CREATE TABLE category (
 
 CREATE TABLE recipe (
   recipe_id SERIAL PRIMARY KEY,
-  food_name VARCHAR(100) NOT NULL,
-  title VARCHAR(100) NOT NULL,
+  title VARCHAR NOT NULL,
   description TEXT,
-  image VARCHAR(255),
+  image VARCHAR,
   category_id INT,
-  popularity INT,
-  ingredients TEXT[],
-  steps TEXT[],
-  video_steps TEXT[],
+  ingredients TEXT NOT NULL,
   user_id INT NOT NULL,
-  created_at TIMESTAMP,
-  FOREIGN KEY (category_id) REFERENCES Category(category_id),
-  FOREIGN KEY (user_id) REFERENCES Users(user_id)
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (category_id) REFERENCES category(category_id),
+  FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+
 

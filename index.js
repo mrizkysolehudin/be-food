@@ -3,6 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const userRoute = require("./src/routes/userRoute.js");
 const categoryRoute = require("./src/routes/categoryRoute.js");
+const recipeRoute = require("./src/routes/recipeRoute.js");
 
 const PORT = 5000;
 const app = express();
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 // routes
 app.use("/users", userRoute);
 app.use("/category", categoryRoute);
+app.use("/recipe", recipeRoute);
 
 app.listen(PORT, () => {
 	console.log(`Server berjalan di PORT: ${PORT}`);
