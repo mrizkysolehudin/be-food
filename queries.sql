@@ -27,4 +27,4 @@ CREATE TABLE recipe (
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-
+ALTER TABLE recipe add deleted_at TIMESTAMP DEFAULT NULL;

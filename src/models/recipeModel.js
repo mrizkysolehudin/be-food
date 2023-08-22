@@ -1,7 +1,13 @@
 const db = require("../configs/db");
 
-const selectAllRecipes = () => {
-	return db.query(`SELECT * FROM recipe`);
+const selectAllRecipes = (search, sort) => {
+	return db.query(` 
+	SELECT recipe.recipe_id, recipe.title, recipe.description, category.category_name AS category, users.name as creator, recipe.image,    recipe.ingredients, TO_CHAR(recipe.created_at, 'DD-MM-YYYY HH24:MI:SS') AS created_at
+	FROM recipe
+	JOIN category ON recipe.category_id = category.category_id
+	JOIN users ON recipe.user_id = users.user_id
+	WHERE recipe.deleted_at IS NULL AND recipe.title ILIKE '%${search}%' 
+	ORDER BY recipe.title ${sort}`);
 };
 
 const insertRecipe = (data) => {

@@ -2,8 +2,11 @@ const recipeModel = require("../models/recipeModel.js");
 
 const recipeController = {
 	getAllRecipes: (req, res) => {
+		let search = req.query.search || "";
+		let sort = req.query.sort || "ASC";
+
 		recipeModel
-			.selectAllRecipes()
+			.selectAllRecipes(search, sort)
 			.then((result) => {
 				res.json({ data: result.rows });
 			})
