@@ -5,10 +5,10 @@ const categoryController = {
 		categoryModel
 			.selectAllCategories()
 			.then((result) => {
-				res.json({ data: result.rows });
+				res.status(200).json({ data: result.rows });
 			})
 			.catch((error) => {
-				res.json({ error: error.message });
+				res.status(500).json({ error: error.message });
 			});
 	},
 
@@ -19,13 +19,17 @@ const categoryController = {
 			category_name,
 		};
 
+		if (!category_name) {
+			return res.status(400).json({ message: "please, input category name" });
+		}
+
 		await categoryModel
 			.insertCategory(data)
 			.then(() => {
-				res.json({ data: data });
+				res.status(201).json({ data: data });
 			})
 			.catch((err) => {
-				res.json(err);
+				res.status(500).json(err);
 			});
 	},
 
@@ -34,10 +38,16 @@ const categoryController = {
 		categoryModel
 			.selectCategory(category_id)
 			.then((result) => {
-				res.json({ data: result.rows });
+				let { rowCount } = result;
+
+				if (!rowCount) {
+					return res.status(404).json({ message: "Category id is not found" });
+				}
+
+				res.status(200).json({ data: result.rows });
 			})
 			.catch((err) => {
-				res.json(err);
+				res.status(500).json(err);
 			});
 	},
 
@@ -48,7 +58,7 @@ const categoryController = {
 
 			const { rowCount } = await categoryModel.selectCategory(category_id);
 			if (!rowCount) {
-				return res.json({ message: "Category id is not found" });
+				return res.status(404).json({ message: "Category id is not found" });
 			}
 
 			const data = {
@@ -56,13 +66,17 @@ const categoryController = {
 				category_name,
 			};
 
+			if (!category_name) {
+				return res.status(400).json({ message: "please, input category name" });
+			}
+
 			categoryModel
 				.updateCategory(data)
 				.then(() => {
-					res.json({ data: data });
+					res.status(200).json({ data: data });
 				})
 				.catch((err) => {
-					res.json(err);
+					res.status(500).json(err);
 				});
 		} catch (error) {
 			console.log(error);
@@ -75,16 +89,16 @@ const categoryController = {
 
 			const { rowCount } = await categoryModel.selectCategory(category_id);
 			if (!rowCount) {
-				return res.json({ message: "Category id is not found" });
+				return res.status(404).json({ message: "Category id is not found" });
 			}
 
 			categoryModel
 				.deleteCategory(category_id)
 				.then(() => {
-					res.json({ message: "Category deleted" });
+					res.status(200).json({ message: "Category deleted" });
 				})
 				.catch((err) => {
-					res.json(err);
+					res.status(500).json(err);
 				});
 		} catch (error) {
 			console.log(error);

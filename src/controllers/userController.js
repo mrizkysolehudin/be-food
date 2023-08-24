@@ -5,10 +5,10 @@ const userController = {
 		userModel
 			.selectAllusers()
 			.then((result) => {
-				res.json({ data: result.rows });
+				res.status(200).json({ data: result.rows });
 			})
 			.catch((error) => {
-				res.json({ error: error.message });
+				res.status(500).json({ error: error.message });
 			});
 	},
 
@@ -25,10 +25,10 @@ const userController = {
 		await userModel
 			.insertUser(data)
 			.then(() => {
-				res.json({ data: data });
+				res.status(201).json({ data: data });
 			})
 			.catch((err) => {
-				res.json(err);
+				res.status(500).json(err);
 			});
 	},
 
@@ -37,10 +37,15 @@ const userController = {
 		userModel
 			.selectUser(user_id)
 			.then((result) => {
-				res.json({ data: result.rows });
+				let { rowCount } = result;
+				if (!rowCount) {
+					return res.status(404).json({ message: "User id is not found" });
+				}
+
+				res.status(200).json({ data: result.rows });
 			})
 			.catch((err) => {
-				res.json(err);
+				res.status(500).json(err);
 			});
 	},
 
@@ -51,7 +56,7 @@ const userController = {
 
 			const { rowCount } = await userModel.selectUser(user_id);
 			if (!rowCount) {
-				return res.json({ message: "user id is not found" });
+				return res.status(404).json({ message: "user id is not found" });
 			}
 
 			const data = {
@@ -65,10 +70,10 @@ const userController = {
 			userModel
 				.updateUser(data)
 				.then(() => {
-					res.json({ data: data });
+					res.status(200).json({ data: data });
 				})
 				.catch((err) => {
-					res.json(err);
+					res.status(500).json(err);
 				});
 		} catch (error) {
 			console.log(error);
@@ -81,16 +86,16 @@ const userController = {
 
 			const { rowCount } = await userModel.selectUser(user_id);
 			if (!rowCount) {
-				return res.json({ message: "user id is not found" });
+				return res.status(404).json({ message: "user id is not found" });
 			}
 
 			userModel
 				.deleteUser(user_id)
 				.then(() => {
-					res.json({ message: "User deleted" });
+					res.status(200).json({ message: "User deleted" });
 				})
 				.catch((err) => {
-					res.json(err);
+					res.status(500).json(err);
 				});
 		} catch (error) {
 			console.log(error);
