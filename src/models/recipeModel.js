@@ -2,19 +2,20 @@ const db = require("../configs/db");
 
 const selectAllRecipes = (search, sort) => {
 	return db.query(` 
-	SELECT recipe.recipe_id, recipe.title, recipe.description, category.category_name AS category, users.name as creator, recipe.image,    recipe.ingredients, TO_CHAR(recipe.created_at, 'DD-MM-YYYY HH24:MI:SS') AS created_at
+	SELECT recipe.recipe_id, recipe.title, recipe.description, category.category_name AS category, users.name as creator, recipe.image,    recipe.ingredients, recipe.video, TO_CHAR(recipe.created_at, 'DD-MM-YYYY HH24:MI:SS') AS created_at 
 	FROM recipe
 	JOIN category ON recipe.category_id = category.category_id
 	JOIN users ON recipe.user_id = users.user_id
-	WHERE recipe.deleted_at IS NULL AND recipe.title ILIKE '%${search}%' 
+	WHERE recipe.title ILIKE '%${search}%' 
 	ORDER BY recipe.title ${sort}`);
 };
 
 const insertRecipe = (data) => {
-	const { title, description, image, category_id, ingredients, user_id } = data;
+	const { title, description, image, category_id, ingredients, video, user_id } =
+		data;
 
-	return db.query(`INSERT INTO recipe (title, description, ingredients, image, user_id, category_id, created_at) 
-	VALUES  ('${title}','${description}','${ingredients}', '${image}', ${user_id},  ${category_id}, CURRENT_TIMESTAMP)`);
+	return db.query(`INSERT INTO recipe (title, description, ingredients, image, video, user_id, category_id, created_at) 
+	VALUES  ('${title}','${description}','${ingredients}', '${image}', '${video}', ${user_id},  ${category_id}, CURRENT_TIMESTAMP)`);
 };
 
 const selectRecipe = (recipe_id) => {
@@ -27,6 +28,7 @@ const updateRecipe = (data) => {
 		title,
 		description,
 		image,
+		video,
 		category_id,
 		ingredients,
 		user_id,
@@ -40,10 +42,11 @@ const updateRecipe = (data) => {
 		image = $3,
 		category_id = $4,
 		ingredients = $5,
-		user_id = $6,
+		video = $6,
+		user_id = $7,
 		created_at = CURRENT_TIMESTAMP
 	WHERE
-		recipe_id = $7
+		recipe_id = $8
 `;
 	const values = [
 		title,
@@ -51,6 +54,7 @@ const updateRecipe = (data) => {
 		image,
 		category_id,
 		ingredients,
+		video,
 		user_id,
 		recipe_id,
 	];
