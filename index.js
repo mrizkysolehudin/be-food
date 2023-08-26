@@ -1,5 +1,8 @@
 const express = require("express");
 const cors = require("cors");
+const xss = require("xss-clean");
+const helmet = require("helmet");
+
 const userRoute = require("./src/routes/userRoute.js");
 const categoryRoute = require("./src/routes/categoryRoute.js");
 const recipeRoute = require("./src/routes/recipeRoute.js");
@@ -9,6 +12,8 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(helmet());
+app.use(xss());
 
 // routes
 app.use("/users", userRoute);
