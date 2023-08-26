@@ -2,10 +2,12 @@
 
 CREATE TABLE users (
   user_id SERIAL PRIMARY KEY,
-  name VARCHAR(100) NOT NULL,
+  name VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
   phone VARCHAR(20),
-  password VARCHAR(255) NOT NULL
+  password VARCHAR(255) NOT NULL,
+  confirmPassword VARCHAR(255) NOT NULL,
+  photo VARCHAR(255)
 );
 
 
@@ -21,6 +23,7 @@ CREATE TABLE recipe (
   image VARCHAR,
   category_id INT,
   ingredients TEXT NOT NULL,
+  video VARCHAR,
   user_id INT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (category_id) REFERENCES category(category_id),

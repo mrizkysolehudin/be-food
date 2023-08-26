@@ -1,36 +1,21 @@
 const userModel = require("../models/userModel.js");
+const { response, responseError } = require("../helpers/response.js");
+const bcrypt = require("bcryptjs");
 
 const userController = {
 	getAllUsers: (req, res) => {
 		let search = req.query.search || "";
+		let sort = req.query.sort || "ASC";
+		let limit = req.query.limit || 10;
+		let offset = req.query.offset || 0;
 
 		userModel
-			.selectAllusers(search)
+			.selectAllusers(search, sort, limit, offset)
 			.then((result) => {
-				res.status(200).json({ data: result.rows });
+				return response(res, result.rows, 200, "get users success");
 			})
 			.catch((error) => {
-				res.status(500).json({ error: error.message });
-			});
-	},
-
-	createUser: async (req, res) => {
-		const { name, email, phone, password } = req.body;
-
-		const data = {
-			name,
-			email,
-			phone,
-			password,
-		};
-
-		await userModel
-			.insertUser(data)
-			.then(() => {
-				res.status(201).json({ data: data });
-			})
-			.catch((err) => {
-				res.status(500).json(err);
+				return responseError(res, 500, error.message);
 			});
 	},
 
@@ -41,13 +26,12 @@ const userController = {
 			.then((result) => {
 				let { rowCount } = result;
 				if (!rowCount) {
-					return res.status(404).json({ message: "User id is not found" });
+					return responseError(res, 404, "User id is not found");
 				}
-
-				res.status(200).json({ data: result.rows });
+				return response(res, result.rows, 200, "get user success");
 			})
-			.catch((err) => {
-				res.status(500).json(err);
+			.catch((error) => {
+				return responseError(res, 500, error.message);
 			});
 	},
 
@@ -58,7 +42,7 @@ const userController = {
 
 			const { rowCount } = await userModel.selectUser(user_id);
 			if (!rowCount) {
-				return res.status(404).json({ message: "user id is not found" });
+				return responseError(res, 404, "User id is not found");
 			}
 
 			const data = {
@@ -72,13 +56,13 @@ const userController = {
 			userModel
 				.updateUser(data)
 				.then(() => {
-					res.status(200).json({ data: data });
+					return response(res, data, 200, "update user success");
 				})
-				.catch((err) => {
-					res.status(500).json(err);
+				.catch((error) => {
+					return responseError(res, 500, error.message);
 				});
 		} catch (error) {
-			console.log(error);
+			return responseError(res, 500, error.message);
 		}
 	},
 
@@ -88,19 +72,71 @@ const userController = {
 
 			const { rowCount } = await userModel.selectUser(user_id);
 			if (!rowCount) {
-				return res.status(404).json({ message: "user id is not found" });
+				return responseError(res, 404, "User id is not found");
 			}
 
 			userModel
 				.deleteUser(user_id)
 				.then(() => {
-					res.status(200).json({ message: "User deleted" });
+					return response(res, null, 200, "delete user success");
 				})
-				.catch((err) => {
-					res.status(500).json(err);
+				.catch((error) => {
+					return responseError(res, 500, error.message);
 				});
 		} catch (error) {
-			console.log(error);
+			return responseError(res, 500, error.message);
+		}
+	},
+
+	registerUser: async (req, res) => {
+		try {
+			const { name, email, phone, password, confirmPassword, photo } = req.body;
+			const passwordHash = bcrypt.hashSync(password);
+			const confirmPasswordHash = bcrypt.hashSync(confirmPassword);
+
+			const { rowCount } = await userModel.findEmail(email);
+			if (rowCount) {
+				return responseError(res, 400, "Email already taken.");
+			}
+
+			const data = {
+				name,
+				email,
+				phone,
+				passwordHash,
+				confirmPasswordHash,
+				photo,
+			};
+
+			await userModel.insertUser(data);
+			return response(res, data, 201, "create user success");
+		} catch (error) {
+			return responseError(res, 500, error.message);
+		}
+	},
+
+	loginUser: async (req, res) => {
+		try {
+			const { email, password } = req.body;
+
+			const {
+				rows: [user],
+			} = await userModel.findEmail(email);
+
+			if (!user) {
+				return responseError(res, 404, "Email already taken");
+			}
+
+			userModel
+				.findEmail(email)
+				.then(() => {
+					return response(res, user, 200, "login success");
+				})
+				.catch((error) => {
+					return responseError(res, 500, error.message);
+				});
+		} catch (error) {
+			return responseError(res, 500, error.message);
 		}
 	},
 };
