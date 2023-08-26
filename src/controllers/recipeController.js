@@ -4,9 +4,10 @@ const recipeController = {
 	getAllRecipes: (req, res) => {
 		let search = req.query.search || "";
 		let sort = req.query.sort || "ASC";
+		let limit = req.query.limit || 10;
 
 		recipeModel
-			.selectAllRecipes(search, sort)
+			.selectAllRecipes(search, sort, limit)
 			.then((result) => {
 				res.status(200).json({ data: result.rows });
 			})

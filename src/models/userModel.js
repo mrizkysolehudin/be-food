@@ -1,7 +1,7 @@
 const db = require("../configs/db.js");
 
-const selectAllusers = () => {
-	return db.query("SELECT * FROM users");
+const selectAllusers = (search) => {
+	return db.query(`SELECT * FROM users WHERE users.name LIKE '%${search}%'`);
 };
 
 const selectUser = (user_id) => {

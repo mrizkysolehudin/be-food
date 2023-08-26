@@ -2,8 +2,10 @@ const userModel = require("../models/userModel.js");
 
 const userController = {
 	getAllUsers: (req, res) => {
+		let search = req.query.search || "";
+
 		userModel
-			.selectAllusers()
+			.selectAllusers(search)
 			.then((result) => {
 				res.status(200).json({ data: result.rows });
 			})
