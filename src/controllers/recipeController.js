@@ -5,9 +5,10 @@ const recipeController = {
 		let search = req.query.search || "";
 		let sort = req.query.sort || "ASC";
 		let limit = req.query.limit || 10;
+		let offset = req.query.offset || 0;
 
 		recipeModel
-			.selectAllRecipes(search, sort, limit)
+			.selectAllRecipes(search, sort, limit, offset)
 			.then((result) => {
 				res.status(200).json({ data: result.rows });
 			})

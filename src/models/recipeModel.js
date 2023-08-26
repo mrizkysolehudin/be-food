@@ -1,6 +1,6 @@
 const db = require("../configs/db");
 
-const selectAllRecipes = (search, sort, limit) => {
+const selectAllRecipes = (search, sort, limit, offset) => {
 	return db.query(` 
 	SELECT recipe.recipe_id, recipe.title, recipe.description, category.category_name AS category, users.name as creator, recipe.image,    recipe.ingredients, recipe.video, TO_CHAR(recipe.created_at, 'DD-MM-YYYY HH24:MI:SS') AS created_at 
 	FROM recipe
@@ -8,7 +8,8 @@ const selectAllRecipes = (search, sort, limit) => {
 	JOIN users ON recipe.user_id = users.user_id
 	WHERE recipe.title ILIKE '%${search}%' 
 	ORDER BY recipe.title ${sort}
-	LIMIT ${limit};
+	LIMIT ${limit}
+	OFFSET ${offset};
 	`);
 };
 
