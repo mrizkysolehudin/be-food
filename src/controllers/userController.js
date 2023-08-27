@@ -1,6 +1,7 @@
 const userModel = require("../models/userModel.js");
 const { response, responseError } = require("../helpers/response.js");
 const bcrypt = require("bcryptjs");
+const { generateToken, generateRefreshToken } = require("../helpers/jwt.js");
 
 const userController = {
 	getAllUsers: (req, res) => {
@@ -119,28 +120,36 @@ const userController = {
 	},
 
 	loginUser: async (req, res) => {
-		try {
-			const { email, password } = req.body;
+		const { email, password } = req.body;
 
-			const {
-				rows: [user],
-			} = await userModel.findEmail(email);
+		userModel
+			.findEmail(email)
+			.then((result) => {
+				const [user] = result.rows;
 
-			if (!user) {
-				return responseError(res, 404, "Email already taken");
-			}
+				if (!user) {
+					return responseError(res, 404, "Email not found");
+				}
 
-			userModel
-				.findEmail(email)
-				.then(() => {
-					return response(res, user, 200, "login success");
-				})
-				.catch((error) => {
-					return responseError(res, 500, error.message);
-				});
-		} catch (error) {
-			return responseError(res, 500, error.message);
-		}
+				const checkPassword = bcrypt.compareSync(password, user.password);
+				if (!checkPassword) {
+					return responseError(res, 400, "Incorrect password");
+				}
+
+				const payload = {
+					email: user.email,
+				};
+				user.token = generateToken(payload);
+				user.refreshToken = generateRefreshToken(payload);
+
+				delete user.password;
+				delete user.confirmpassword;
+
+				return response(res, user, 200, "login success");
+			})
+			.catch((error) => {
+				return responseError(res, 500, error.message);
+			});
 	},
 };
 
