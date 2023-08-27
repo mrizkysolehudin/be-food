@@ -69,10 +69,15 @@ const deleteRecipe = (recipe_id) => {
 	return db.query(`DELETE FROM recipe WHERE recipe_id=${recipe_id}`);
 };
 
+const countDataRecipe = () => {
+	return db.query("SELECT COUNT(*) FROM recipe");
+};
+
 module.exports = {
 	selectAllRecipes,
 	insertRecipe,
 	selectRecipe,
 	updateRecipe,
 	deleteRecipe,
+	countDataRecipe,
 };

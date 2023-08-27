@@ -2,16 +2,30 @@ const { response, responseError } = require("../helpers/response.js");
 const recipeModel = require("../models/recipeModel.js");
 
 const recipeController = {
-	getAllRecipes: (req, res) => {
+	getAllRecipes: async (req, res) => {
 		let search = req.query.search || "";
 		let sort = req.query.sort || "ASC";
-		let limit = req.query.limit || 10;
-		let offset = req.query.offset || 0;
+
+		let page = parseInt(req.query.page) || 1;
+		let limit = parseInt(req.query.limit) || 10;
+		let offset = (page - 1) * limit;
+
+		const resultCount = await recipeModel.countDataRecipe();
+		const { count } = resultCount.rows[0];
+
+		const totalData = parseInt(count);
+		const totalPage = Math.ceil(totalData / limit);
+		const pagination = {
+			currentPage: page,
+			limit,
+			totalData,
+			totalPage,
+		};
 
 		recipeModel
 			.selectAllRecipes(search, sort, limit, offset)
 			.then((result) => {
-				return response(res, result.rows, 200, "get recipes success");
+				return response(res, result.rows, 200, "get recipes success", pagination);
 			})
 			.catch((error) => {
 				return responseError(res, 500, error.message);
