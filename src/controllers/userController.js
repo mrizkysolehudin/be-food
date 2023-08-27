@@ -38,7 +38,7 @@ const userController = {
 	updateUser: async (req, res) => {
 		try {
 			const user_id = req.params.id;
-			const { name, email, phone, password } = req.body;
+			const { name, email, phone, photo, role } = req.body;
 
 			const { rowCount } = await userModel.selectUser(user_id);
 			if (!rowCount) {
@@ -50,7 +50,8 @@ const userController = {
 				name,
 				email,
 				phone,
-				password,
+				photo,
+				role: role || 1,
 			};
 
 			userModel
@@ -90,7 +91,8 @@ const userController = {
 
 	registerUser: async (req, res) => {
 		try {
-			const { name, email, phone, password, confirmPassword, photo } = req.body;
+			const { name, email, phone, password, confirmPassword, photo, role } =
+				req.body;
 			const passwordHash = bcrypt.hashSync(password);
 			const confirmPasswordHash = bcrypt.hashSync(confirmPassword);
 
@@ -103,9 +105,10 @@ const userController = {
 				name,
 				email,
 				phone,
-				passwordHash,
-				confirmPasswordHash,
+				password: passwordHash,
+				confirmPassword: confirmPasswordHash,
 				photo,
+				role: role || 1,
 			};
 
 			await userModel.insertUser(data);

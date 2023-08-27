@@ -15,17 +15,17 @@ const selectUser = (user_id) => {
 };
 
 const insertUser = (data) => {
-	const { name, email, phone, password, confirmPassword, photo } = data;
+	const { name, email, phone, password, confirmPassword, photo, role } = data;
 
 	return db.query(
-		`INSERT INTO users (name,email,phone,password,confirmPassword,photo) VALUES( '${name}', '${email}', '${phone}', '${password}', '${confirmPassword}', '${photo}')`,
+		`INSERT INTO users (name,email,phone,password,confirmPassword,photo,role) VALUES( '${name}', '${email}', '${phone}', '${password}', '${confirmPassword}', '${photo}', '${role}')`,
 	);
 };
 
 const updateUser = (data) => {
-	const { user_id, name, email, phone, password, confirmPassword, photo } = data;
+	const { user_id, name, email, phone, photo, role } = data;
 	return db.query(
-		`UPDATE users SET name='${name}', email='${email}', phone='${phone}', password='${password}', confirmPassword='${confirmPassword}', photo='${photo}'  WHERE user_id=${user_id}`,
+		`UPDATE users SET name='${name}', email='${email}', phone='${phone}', photo='${photo}', role=${role}  WHERE user_id=${user_id}`,
 	);
 };
 

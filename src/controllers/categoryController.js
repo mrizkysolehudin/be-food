@@ -1,14 +1,15 @@
 const categoryModel = require("../models/categoryModel.js");
+const { responseError, response } = require("../helpers/response.js");
 
 const categoryController = {
 	getAllCategories: (req, res) => {
 		categoryModel
 			.selectAllCategories()
 			.then((result) => {
-				res.status(200).json({ data: result.rows });
+				return response(res, result.rows, 200, "get categories success");
 			})
 			.catch((error) => {
-				res.status(500).json({ error: error.message });
+				return responseError(res, 500, error.message);
 			});
 	},
 
@@ -20,16 +21,16 @@ const categoryController = {
 		};
 
 		if (!category_name) {
-			return res.status(400).json({ message: "please, input category name" });
+			return responseError(res, 400, "please, input category name");
 		}
 
 		await categoryModel
 			.insertCategory(data)
 			.then(() => {
-				res.status(201).json({ data: data });
+				return response(res, data, 201, "create category success");
 			})
-			.catch((err) => {
-				res.status(500).json(err);
+			.catch((error) => {
+				return responseError(res, 500, error.message);
 			});
 	},
 
@@ -41,13 +42,13 @@ const categoryController = {
 				let { rowCount } = result;
 
 				if (!rowCount) {
-					return res.status(404).json({ message: "Category id is not found" });
+					return responseError(res, 404, "Category id is not found");
 				}
 
-				res.status(200).json({ data: result.rows });
+				return response(res, result.rows, 200, "get category success");
 			})
-			.catch((err) => {
-				res.status(500).json(err);
+			.catch((error) => {
+				return responseError(res, 500, error.message);
 			});
 	},
 
@@ -58,7 +59,7 @@ const categoryController = {
 
 			const { rowCount } = await categoryModel.selectCategory(category_id);
 			if (!rowCount) {
-				return res.status(404).json({ message: "Category id is not found" });
+				return responseError(res, 404, "Category id is not found");
 			}
 
 			const data = {
@@ -67,19 +68,19 @@ const categoryController = {
 			};
 
 			if (!category_name) {
-				return res.status(400).json({ message: "please, input category name" });
+				return responseError(res, 400, "please, input category name");
 			}
 
 			categoryModel
 				.updateCategory(data)
 				.then(() => {
-					res.status(200).json({ data: data });
+					return response(res, data, 200, "update category success");
 				})
-				.catch((err) => {
-					res.status(500).json(err);
+				.catch((error) => {
+					return responseError(res, 500, error.message);
 				});
 		} catch (error) {
-			console.log(error);
+			return responseError(res, 500, error.message);
 		}
 	},
 
@@ -89,19 +90,19 @@ const categoryController = {
 
 			const { rowCount } = await categoryModel.selectCategory(category_id);
 			if (!rowCount) {
-				return res.status(404).json({ message: "Category id is not found" });
+				return responseError(res, 400, "Category id is not found");
 			}
 
 			categoryModel
 				.deleteCategory(category_id)
 				.then(() => {
-					res.status(200).json({ message: "Category deleted" });
+					return response(res, null, 200, "delete category success");
 				})
-				.catch((err) => {
-					res.status(500).json(err);
+				.catch((error) => {
+					return responseError(res, 500, error.message);
 				});
 		} catch (error) {
-			console.log(error);
+			return responseError(res, 500, error.message);
 		}
 	},
 };

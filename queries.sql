@@ -31,3 +31,4 @@ CREATE TABLE recipe (
 );
 
 ALTER TABLE recipe add video TEXT DEFAULT NULL;
+ALTER TABLE users add role INT;

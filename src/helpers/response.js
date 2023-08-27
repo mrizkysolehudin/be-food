@@ -9,7 +9,7 @@ const response = (res, result, status, message, pagination) => {
 	responseData.message = message || null;
 	responseData.pagination = pagination || {};
 
-	res.status(status).json(responseData);
+	return res.status(status).json(responseData);
 };
 
 const responseError = (res, status, message) => {
@@ -20,7 +20,7 @@ const responseError = (res, status, message) => {
 	}
 	responseData.statusCode = status;
 	responseData.message = message || null;
-	res.status(status).json(responseData);
+	return res.status(status).json(responseData);
 };
 
 module.exports = { response, responseError };
