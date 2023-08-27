@@ -1,3 +1,4 @@
+const { response, responseError } = require("../helpers/response.js");
 const recipeModel = require("../models/recipeModel.js");
 
 const recipeController = {
@@ -10,10 +11,10 @@ const recipeController = {
 		recipeModel
 			.selectAllRecipes(search, sort, limit, offset)
 			.then((result) => {
-				res.status(200).json({ data: result.rows });
+				return response(res, result.rows, 200, "get recipes success");
 			})
 			.catch((error) => {
-				res.status(500).json({ error: error.message });
+				return responseError(res, 500, error.message);
 			});
 	},
 
@@ -41,9 +42,9 @@ const recipeController = {
 
 			await recipeModel.insertRecipe(data);
 
-			res.status(201).json({ data });
+			return response(res, data, 201, "create recipe success");
 		} catch (error) {
-			res.status(500).json({ error: error.message });
+			return responseError(res, 500, error.message);
 		}
 	},
 
@@ -55,13 +56,13 @@ const recipeController = {
 			.then((result) => {
 				let { rowCount } = result;
 				if (!rowCount) {
-					return res.status(404).json({ message: "Recipe id is not found" });
+					return responseError(res, 404, "Recipe id is not found");
 				}
 
-				res.status(200).json({ data: result.rows });
+				return response(res, result.rows, 200, "get recipe success");
 			})
-			.catch((err) => {
-				res.status(500).json(err);
+			.catch((error) => {
+				return responseError(res, 500, error.message);
 			});
 	},
 
@@ -80,7 +81,7 @@ const recipeController = {
 
 			const { rowCount } = await recipeModel.selectRecipe(recipe_id);
 			if (!rowCount) {
-				return res.status(404).json({ message: "Recipe id is not found" });
+				return responseError(res, 404, "Recipe id is not found");
 			}
 
 			const data = {
@@ -96,9 +97,9 @@ const recipeController = {
 
 			await recipeModel.updateRecipe(data);
 
-			res.status(200).json({ data: data });
+			return response(res, data, 200, "update recipe success");
 		} catch (error) {
-			res.status(500).json({ error: error.message });
+			return responseError(res, 500, error.message);
 		}
 	},
 
@@ -108,19 +109,19 @@ const recipeController = {
 
 			const { rowCount } = await recipeModel.selectRecipe(recipe_id);
 			if (!rowCount) {
-				return res.status(404).json({ message: "Recipe id is not found" });
+				return responseError(res, 404, "Recipe id is not found");
 			}
 
 			recipeModel
 				.deleteRecipe(recipe_id)
 				.then(() => {
-					res.status(200).json({ message: "Recipe deleted" });
+					return response(res, null, 200, "delete recipe success");
 				})
-				.catch((err) => {
-					res.status(500).json(err);
+				.catch((error) => {
+					return responseError(res, 500, error.message);
 				});
 		} catch (error) {
-			console.log(error);
+			return responseError(res, 500, error.message);
 		}
 	},
 };
