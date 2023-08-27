@@ -109,7 +109,7 @@ const userController = {
 				password: passwordHash,
 				confirmPassword: confirmPasswordHash,
 				photo,
-				role: role || 1,
+				role: role ?? 1,
 			};
 
 			await userModel.insertUser(data);
@@ -136,14 +136,14 @@ const userController = {
 					return responseError(res, 400, "Incorrect password");
 				}
 
+				delete user.password;
+				delete user.confirmpassword;
+
 				const payload = {
-					email: user.email,
+					user,
 				};
 				user.token = generateToken(payload);
 				user.refreshToken = generateRefreshToken(payload);
-
-				delete user.password;
-				delete user.confirmpassword;
 
 				return response(res, user, 200, "login success");
 			})
