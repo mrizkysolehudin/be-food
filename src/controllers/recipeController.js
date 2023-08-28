@@ -34,15 +34,10 @@ const recipeController = {
 
 	createRecipe: async (req, res) => {
 		try {
-			const {
-				title,
-				description,
-				image,
-				category_id,
-				ingredients,
-				video,
-				user_id,
-			} = req.body;
+			const { title, description, category_id, ingredients, video, user_id } =
+				req.body;
+
+			const image = req?.file?.filename ?? "";
 
 			const data = {
 				title,
@@ -83,15 +78,10 @@ const recipeController = {
 	updateRecipe: async (req, res) => {
 		try {
 			const recipe_id = req.params.id;
-			const {
-				title,
-				description,
-				image,
-				category_id,
-				ingredients,
-				video,
-				user_id,
-			} = req.body;
+			const image = req?.file?.filename ?? "";
+
+			const { title, description, category_id, ingredients, video, user_id } =
+				req.body;
 
 			const { rowCount } = await recipeModel.selectRecipe(recipe_id);
 			if (!rowCount) {

@@ -39,7 +39,8 @@ const userController = {
 	updateUser: async (req, res) => {
 		try {
 			const user_id = req.params.id;
-			const { name, email, phone, photo, role } = req.body;
+			const { name, email, phone, role } = req.body;
+			const photo = req.file.filename;
 
 			const { rowCount } = await userModel.selectUser(user_id);
 			if (!rowCount) {
@@ -52,7 +53,7 @@ const userController = {
 				email,
 				phone,
 				photo,
-				role: role || 1,
+				role: role ?? 1,
 			};
 
 			userModel
