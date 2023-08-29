@@ -37,6 +37,10 @@ const findEmail = (email) => {
 	return db.query(`SELECT * FROM users WHERE email='${email}'`);
 };
 
+const deletePhotoUser = (userId) => {
+	return db.query(`UPDATE users SET photo = NULL WHERE user_id=${userId}`);
+};
+
 module.exports = {
 	selectAllusers,
 	selectUser,
@@ -44,4 +48,5 @@ module.exports = {
 	updateUser,
 	deleteUser,
 	findEmail,
+	deletePhotoUser,
 };

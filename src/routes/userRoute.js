@@ -9,6 +9,7 @@ router
 	.post("/login", userController.loginUser)
 	.get("/:id", userController.getUser)
 	.put("/:id", uploadPhotoProfile, userController.updateUser)
-	.delete("/:id", userController.deleteUser);
+	.delete("/:id", userController.deleteUser)
+	.delete("/photo/:id", userController.deleteProfilePhoto);
 
 module.exports = router;

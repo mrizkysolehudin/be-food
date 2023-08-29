@@ -152,6 +152,28 @@ const userController = {
 				return responseError(res, 500, error.message);
 			});
 	},
+
+	deleteProfilePhoto: async (req, res) => {
+		try {
+			const user_id = req.params.id;
+
+			const { rowCount } = await userModel.selectUser(user_id);
+			if (!rowCount) {
+				return responseError(res, 404, "User id is not found");
+			}
+
+			userModel
+				.deletePhotoUser(user_id)
+				.then(() => {
+					return response(res, null, 200, "delete photo user success");
+				})
+				.catch((error) => {
+					return responseError(res, 500, error.message);
+				});
+		} catch (error) {
+			return responseError(res, 500, error.message);
+		}
+	},
 };
 
 module.exports = userController;
