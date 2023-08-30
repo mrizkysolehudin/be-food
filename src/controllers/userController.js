@@ -2,6 +2,7 @@ const userModel = require("../models/userModel.js");
 const { response, responseError } = require("../helpers/response.js");
 const bcrypt = require("bcryptjs");
 const { generateToken, generateRefreshToken } = require("../helpers/jwt.js");
+const cloudinary = require("../helpers/cloudinary.js");
 
 const userController = {
 	getAllUsers: (req, res) => {
@@ -40,7 +41,11 @@ const userController = {
 		try {
 			const user_id = req.params.id;
 			const { name, email, phone, role } = req.body;
-			const photo = req.file.filename;
+
+			const uploadToCloudinary = await cloudinary.uploader.upload(req.file.path, {
+				folder: "mama_recipe",
+			});
+			const imageUrl = uploadToCloudinary.secure_url;
 
 			const { rowCount } = await userModel.selectUser(user_id);
 			if (!rowCount) {
@@ -52,7 +57,7 @@ const userController = {
 				name,
 				email,
 				phone,
-				photo,
+				photo: imageUrl ?? "",
 				role: role ?? 1,
 			};
 

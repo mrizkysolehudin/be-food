@@ -1,3 +1,4 @@
+const cloudinary = require("../helpers/cloudinary.js");
 const { response, responseError } = require("../helpers/response.js");
 const recipeModel = require("../models/recipeModel.js");
 
@@ -37,12 +38,15 @@ const recipeController = {
 			const { title, description, category_id, ingredients, video, user_id } =
 				req.body;
 
-			const image = req?.file?.filename ?? "";
+			const uploadToCloudinary = await cloudinary.uploader.upload(req.file.path, {
+				folder: "mama_recipe",
+			});
+			const imageUrl = uploadToCloudinary.secure_url;
 
 			const data = {
 				title,
 				description,
-				image,
+				image: imageUrl,
 				category_id,
 				ingredients,
 				video,
@@ -78,7 +82,10 @@ const recipeController = {
 	updateRecipe: async (req, res) => {
 		try {
 			const recipe_id = req.params.id;
-			const image = req?.file?.filename ?? "";
+			const uploadToCloudinary = await cloudinary.uploader.upload(req.file.path, {
+				folder: "mama_recipe",
+			});
+			const imageUrl = uploadToCloudinary.secure_url;
 
 			const { title, description, category_id, ingredients, video, user_id } =
 				req.body;
@@ -92,7 +99,7 @@ const recipeController = {
 				recipe_id,
 				title,
 				description,
-				image,
+				image: imageUrl,
 				category_id,
 				video,
 				ingredients,
