@@ -39,8 +39,12 @@ const recipeController = {
 				req.body;
 
 			const uploadToCloudinary = await cloudinary.uploader.upload(req.file.path, {
-				folder: "mama_recipe",
+				folder: "mama_recipe/recipe",
 			});
+			if (!uploadToCloudinary) {
+				return responseError(res, 400, "upload image failed");
+			}
+
 			const imageUrl = uploadToCloudinary.secure_url;
 
 			const data = {
@@ -83,8 +87,12 @@ const recipeController = {
 		try {
 			const recipe_id = req.params.id;
 			const uploadToCloudinary = await cloudinary.uploader.upload(req.file.path, {
-				folder: "mama_recipe",
+				folder: "mama_recipe/recipe",
 			});
+			if (!uploadToCloudinary) {
+				return responseError(res, 400, "upload image failed");
+			}
+
 			const imageUrl = uploadToCloudinary.secure_url;
 
 			const { title, description, category_id, ingredients, video, user_id } =

@@ -43,8 +43,12 @@ const userController = {
 			const { name, email, phone, role } = req.body;
 
 			const uploadToCloudinary = await cloudinary.uploader.upload(req.file.path, {
-				folder: "mama_recipe",
+				folder: "mama_recipe/users",
 			});
+			if (!uploadToCloudinary) {
+				return responseError(res, 400, "upload image failed");
+			}
+
 			const imageUrl = uploadToCloudinary.secure_url;
 
 			const { rowCount } = await userModel.selectUser(user_id);
