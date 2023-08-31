@@ -2,12 +2,22 @@ const express = require("express");
 const router = express.Router();
 const recipeController = require("../controllers/recipeController.js");
 const { uploadImageRecipe } = require("../middlewares/uploadImage.js");
+const {
+	isLoginAuth,
+	userRoleAuth,
+} = require("../middlewares/authMiddleware.js");
 
 router
 	.get("/", recipeController.getAllRecipes)
-	.post("/", uploadImageRecipe, recipeController.createRecipe)
+	.post(
+		"/",
+		isLoginAuth,
+		userRoleAuth,
+		uploadImageRecipe,
+		recipeController.createRecipe,
+	)
 	.get("/:id", recipeController.getRecipe)
-	.put("/:id", uploadImageRecipe, recipeController.updateRecipe)
-	.delete("/:id", recipeController.deleteRecipe);
+	.put("/:id", isLoginAuth, uploadImageRecipe, recipeController.updateRecipe)
+	.delete("/:id", isLoginAuth, recipeController.deleteRecipe);
 
 module.exports = router;
