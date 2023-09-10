@@ -1,0 +1,685 @@
+{
+	"info": {
+		"_postman_id": "a5ac99f9-748e-44c3-8b6c-fc96d1de2175",
+		"name": "bc-recipe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23681909"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "get users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "r",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "A",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "ASC",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "DESC",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "offset",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/users/15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REDIS get user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/users/getFromRedis/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"getFromRedis",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "zzz",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "zzz@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "089",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete photo profile",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/photo/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"photo",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"email\": \"adi@gmail.com\",\r\n    \"password\": \"111\"\r\n}\r\n\r\n// {\r\n// \"email\": \"umay@gmail.com\",\r\n// \"password\": \"111\"\r\n// }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create user / register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"name\": \"user\",\r\n\"email\": \"user7@gmail.com\",\r\n\"phone\": \"089\",\r\n\"password\": \"111\",\r\n\"confirmPassword\": \"111\",\r\n\"photo\": \"\",\r\n\"role\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "recipe",
+			"item": [
+				{
+					"name": "get all recipes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/recipe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"recipe"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "ASC",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "DESC",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "offset",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "a",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get recipe",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/recipe/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"recipe",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create recipe",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Coffe Lava Cake",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/mrizk/Downloads/Rectangle 316.png"
+								},
+								{
+									"key": "category_id",
+									"value": "9",
+									"type": "text"
+								},
+								{
+									"key": "ingredients",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "video",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "26",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/recipe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"recipe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update recipe",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "dddd",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/mrizk/OneDrive/Pictures/dcimz/dcim-programming/cartoon/anshita-nair-0rxLLHD1XxA-unsplash.jpg"
+								},
+								{
+									"key": "category_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "video",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "ingredients",
+									"value": "tes",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/recipe/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"recipe",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete recipe",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/recipe/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"recipe",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "category",
+			"item": [
+				{
+					"name": "get all categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjE3LCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluNUBnbWFpbC5jb20iLCJwaG9uZSI6IjA4OSIsInBob3RvIjoiIiwicm9sZSI6MH0sImlhdCI6MTY5MzEzOTg1NywiZXhwIjoxNjkzMTQzNDU3fQ.BLejE5zZLPjkUL5jH_b2KSi-xeCc4GzC2vE_iUUD2xc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/category/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"category",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"category_name\": \"savory\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update category",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n\"category_name\": \"qqqqaaa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/category/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"category",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/category/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"category",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjI3LCJuYW1lIjoiYWRpIiwiZW1haWwiOiJhZGlAZ21haWwuY29tIiwicGhvbmUiOiIwODk4Nzg2NTY1NDM3IiwicGhvdG8iOiIiLCJyb2xlIjowfSwiaWF0IjoxNjkzNDgwNTkyLCJleHAiOjE2OTM0ODQxOTJ9.go9b7DBSF6Yf0sgoWGYflQIcleMifC29k6t7O4_uGgY",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "admin",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjIzLCJuYW1lIjoidXNlciIsImVtYWlsIjoidXNlcjVAZ21haWwuY29tIiwicGhvbmUiOiIwODkiLCJwaG90byI6IiIsInJvbGUiOjB9LCJpYXQiOjE2OTM0NzE4ODUsImV4cCI6MTY5MzQ3NTQ4NX0.8fP2kdYUcyabnU0iGlUHS5s6jms3MQ41g56lGWPXW-Q",
+			"type": "string"
+		},
+		{
+			"key": "user",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjIyLCJuYW1lIjoidXNlciIsImVtYWlsIjoidXNlcjRAZ21haWwuY29tIiwicGhvbmUiOiIwODkiLCJwaG90byI6IiIsInJvbGUiOjF9LCJpYXQiOjE2OTM0NzE3ODIsImV4cCI6MTY5MzQ3NTM4Mn0.Sk8ebz0y8_TJxGe8FrAQDD-AIls00B2cpfGdbvlASII",
+			"type": "string"
+		}
+	]
+}

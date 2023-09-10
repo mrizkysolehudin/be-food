@@ -41,6 +41,10 @@ const deletePhotoUser = (userId) => {
 	return db.query(`UPDATE users SET photo = NULL WHERE user_id=${userId}`);
 };
 
+const countDataUsers = () => {
+	return db.query("SELECT COUNT(*) FROM users");
+};
+
 module.exports = {
 	selectAllusers,
 	selectUser,
@@ -49,4 +53,5 @@ module.exports = {
 	deleteUser,
 	findEmail,
 	deletePhotoUser,
+	countDataUsers,
 };
