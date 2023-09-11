@@ -82,7 +82,7 @@ const userController = {
 				name,
 				email,
 				password: passwordHash,
-				confirmPasswordHash: confirmPasswordHash,
+				confirmPassword: confirmPasswordHash,
 				phone,
 				photo: imageUrl ?? "",
 				role: role ?? 1,
