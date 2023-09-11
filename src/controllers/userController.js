@@ -55,10 +55,7 @@ const userController = {
 	updateUser: async (req, res) => {
 		try {
 			const user_id = req.params.id;
-			const { name, email, password, confirmPassword, phone, role } = req.body;
-
-			const passwordHash = bcrypt.hashSync(password);
-			const confirmPasswordHash = bcrypt.hashSync(confirmPassword);
+			const { name, email, phone, role } = req.body;
 
 			const uploadToCloudinary = await cloudinary.uploader.upload(
 				req?.file?.path,
@@ -81,8 +78,6 @@ const userController = {
 				user_id,
 				name,
 				email,
-				password: passwordHash,
-				confirmPassword: confirmPasswordHash,
 				phone,
 				photo: imageUrl ?? "",
 				role: role ?? 1,

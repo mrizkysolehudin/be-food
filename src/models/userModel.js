@@ -23,10 +23,9 @@ const insertUser = (data) => {
 };
 
 const updateUser = (data) => {
-	const { user_id, name, email, password, confirmPassword, phone, photo, role } =
-		data;
+	const { user_id, name, email, phone, photo, role } = data;
 	return db.query(
-		`UPDATE users SET name='${name}', email='${email}', password='${password}', confirmPassword='${confirmPassword}', phone='${phone}', photo='${photo}', role=${role}  WHERE user_id=${user_id}`,
+		`UPDATE users SET name='${name}', email='${email}', phone='${phone}', photo='${photo}', role=${role}  WHERE user_id=${user_id}`,
 	);
 };
 
