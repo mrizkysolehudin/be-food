@@ -89,10 +89,10 @@ const userController = {
 					return response(res, data, 200, "update user success");
 				})
 				.catch((error) => {
-					return responseError(res, 500, error.message);
+					return responseError(res, 500, error);
 				});
 		} catch (error) {
-			return responseError(res, 500, error.message);
+			return responseError(res, 500, error);
 		}
 	},
 
