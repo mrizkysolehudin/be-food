@@ -55,11 +55,17 @@ const userController = {
 	updateUser: async (req, res) => {
 		try {
 			const user_id = req.params.id;
-			const { name, email, phone, role } = req.body;
+			const { name, email, password, confirmPassword, phone, role } = req.body;
 
-			const uploadToCloudinary = await cloudinary.uploader.upload(req.file.path, {
-				folder: "mama_recipe/users",
-			});
+			const passwordHash = bcrypt.hashSync(password);
+			const confirmPasswordHash = bcrypt.hashSync(confirmPassword);
+
+			const uploadToCloudinary = await cloudinary.uploader.upload(
+				req?.file?.path,
+				{
+					folder: "mama_recipe/users",
+				},
+			);
 			if (!uploadToCloudinary) {
 				return responseError(res, 400, "upload image failed");
 			}
@@ -75,6 +81,8 @@ const userController = {
 				user_id,
 				name,
 				email,
+				password: passwordHash,
+				confirmPasswordHash: confirmPasswordHash,
 				phone,
 				photo: imageUrl ?? "",
 				role: role ?? 1,

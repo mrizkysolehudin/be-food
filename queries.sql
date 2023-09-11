@@ -32,3 +32,6 @@ CREATE TABLE recipe (
 
 ALTER TABLE recipe add video TEXT DEFAULT NULL;
 ALTER TABLE users add role INT;
+
+
+INSERT INTO recipe(category_id,title,description,image,ingredients,user_id) VALUES(6,'Chiken Kare','','https://res.cloudinary.com/dskltx6xi/image/upload/v1693480347/mama_recipe/recipe/u8mwpowmu9hxfa5ajfsu.png', 'Chicken, Potatoes, Carrots, Onions, Garlic, Ginger, Curry powder, Coconut milk, Chicken broth, Vegetable oil.',6);
