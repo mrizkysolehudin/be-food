@@ -19,7 +19,7 @@ const responseError = (res, status, message) => {
 		responseData.status = "error";
 	}
 	responseData.statusCode = status;
-	responseData.message = message || null;
+	responseData.message = message ?? null;
 	return res.status(status).json(responseData);
 };
 
