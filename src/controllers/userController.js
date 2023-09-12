@@ -3,7 +3,7 @@ const { response, responseError } = require("../helpers/response.js");
 const bcrypt = require("bcryptjs");
 const { generateToken, generateRefreshToken } = require("../helpers/jwt.js");
 const cloudinary = require("../helpers/cloudinary.js");
-const redis = require("../configs/redis.js");
+// const redis = require("../configs/redis.js");
 
 const userController = {
 	getAllUsers: async (req, res) => {
@@ -205,25 +205,25 @@ const userController = {
 	},
 
 	// redis
-	getById: (req, res) => {
-		const id = req.params.id;
+	// getById: (req, res) => {
+	// 	const id = req.params.id;
 
-		userModel
-			.selectUser(id)
-			.then((result) => {
-				const dataRedis = redis.set(`getFromRedis/${id}`, JSON.stringify(result), {
-					EX: 180,
-					NX: true,
-				});
-				res.send({
-					fromCache: false,
-					data: dataRedis,
-				});
-			})
-			.catch((error) => {
-				res.json({ message: error.message });
-			});
-	},
+	// 	userModel
+	// 		.selectUser(id)
+	// 		.then((result) => {
+	// 			const dataRedis = redis.set(`getFromRedis/${id}`, JSON.stringify(result), {
+	// 				EX: 180,
+	// 				NX: true,
+	// 			});
+	// 			res.send({
+	// 				fromCache: false,
+	// 				data: dataRedis,
+	// 			});
+	// 		})
+	// 		.catch((error) => {
+	// 			res.json({ message: error.message });
+	// 		});
+	// },
 };
 
 module.exports = userController;
