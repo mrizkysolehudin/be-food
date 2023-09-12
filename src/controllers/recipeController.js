@@ -143,6 +143,19 @@ const recipeController = {
 			return responseError(res, 500, error.message);
 		}
 	},
+
+	getRecipesUserByPayload: async (req, res) => {
+		let id = req.payload.id;
+
+		recipeModel
+			.selectRecipesUserByPayload(id)
+			.then((result) => {
+				return response(res, result.rows, 200, "get recipes success");
+			})
+			.catch((error) => {
+				return responseError(res, 500, error.message);
+			});
+	},
 };
 
 module.exports = recipeController;
