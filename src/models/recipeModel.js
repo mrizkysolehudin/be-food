@@ -73,13 +73,13 @@ const countDataRecipe = () => {
 	return db.query("SELECT COUNT(*) FROM recipe");
 };
 
-const selectRecipesUserByPayload = (user_id) => {
+const selectRecipesUserByUserId = (user_id) => {
 	return db.query(`
 	SELECT
 	recipe.recipe_id,
 	recipe.title,
-	users.name AS creator,
 	recipe.image,
+	users.name AS creator,
 	TO_CHAR(recipe.created_at, 'DD-MM-YYYY HH24:MI:SS') AS created_at
 FROM
 	recipe
@@ -97,5 +97,5 @@ module.exports = {
 	updateRecipe,
 	deleteRecipe,
 	countDataRecipe,
-	selectRecipesUserByPayload,
+	selectRecipesUserByUserId,
 };

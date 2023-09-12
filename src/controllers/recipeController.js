@@ -1,6 +1,7 @@
 const cloudinary = require("../helpers/cloudinary.js");
 const { response, responseError } = require("../helpers/response.js");
 const recipeModel = require("../models/recipeModel.js");
+const userModel = require("../models/userModel.js");
 
 const recipeController = {
 	getAllRecipes: async (req, res) => {
@@ -144,17 +145,26 @@ const recipeController = {
 		}
 	},
 
-	getRecipesUserByPayload: async (req, res) => {
-		let id = req.payload.id;
+	getRecipesUserByUserId: async (req, res) => {
+		try {
+			const user_id = req.params.user_id;
 
-		recipeModel
-			.selectRecipesUserByPayload(id)
-			.then((result) => {
-				return response(res, result.rows, 200, "get recipes success");
-			})
-			.catch((error) => {
-				return responseError(res, 500, error.message);
-			});
+			const { rowCount } = await userModel.selectUser(user_id);
+			if (!rowCount) {
+				return responseError(res, 404, "User id is not found");
+			}
+
+			recipeModel
+				.selectRecipesUserByUserId(user_id)
+				.then((result) => {
+					return response(res, result.rows, 200, "get user recipes success");
+				})
+				.catch((error) => {
+					return responseError(res, 500, error.message);
+				});
+		} catch (error) {
+			return responseError(res, 500, error.message);
+		}
 	},
 };
 

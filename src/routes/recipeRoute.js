@@ -19,6 +19,6 @@ router
 	.get("/:id", recipeController.getRecipe)
 	.put("/:id", isLoginAuth, uploadImageRecipe, recipeController.updateRecipe)
 	.delete("/:id", isLoginAuth, recipeController.deleteRecipe)
-	.get("/user-recipes", isLoginAuth, recipeController.getRecipesUserByPayload);
+	.get("/user-recipes/:user_id", recipeController.getRecipesUserByUserId);
 
 module.exports = router;

@@ -35,3 +35,16 @@ ALTER TABLE users add role INT;
 
 
 INSERT INTO recipe(category_id,title,description,image,ingredients,user_id) VALUES(6,'Chiken Kare','','https://res.cloudinary.com/dskltx6xi/image/upload/v1693480347/mama_recipe/recipe/u8mwpowmu9hxfa5ajfsu.png', 'Chicken, Potatoes, Carrots, Onions, Garlic, Ginger, Curry powder, Coconut milk, Chicken broth, Vegetable oil.',6);
+
+SELECT
+	recipe.recipe_id,
+	recipe.title,
+	users.name AS creator,
+	recipe.image,
+	TO_CHAR(recipe.created_at, 'DD-MM-YYYY HH24:MI:SS') AS created_at
+FROM
+	recipe
+JOIN
+	users ON recipe.user_id = users.user_id
+WHERE
+	users.user_id = 27; 
