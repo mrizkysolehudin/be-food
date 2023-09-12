@@ -69,20 +69,20 @@ const userController = {
 
 			const imageUrl = uploadToCloudinary.secure_url;
 
-			const { rowCount } = await userModel.selectUser(user_id);
+			const { rowCount, rows } = await userModel.selectUser(user_id);
 			if (!rowCount) {
 				return responseError(res, 404, "User id is not found");
 			}
 
+			const currentUser = rows[0];
+
 			const data = {
 				user_id,
-				name,
-				email,
-				phone,
-				photo:
-					imageUrl ??
-					"https://res.cloudinary.com/dskltx6xi/image/upload/v1694509756/mama_recipe/users/blank_dd1daa.png",
-				role: role ?? 1,
+				name: name ?? currentUser?.name,
+				email: email ?? currentUser?.email,
+				phone: phone ?? currentUser?.phone,
+				photo: imageUrl ?? currentUser?.photo,
+				role: role ?? currentUser?.role,
 			};
 
 			userModel
@@ -138,7 +138,9 @@ const userController = {
 				phone,
 				password: passwordHash,
 				confirmPassword: confirmPasswordHash,
-				photo,
+				photo:
+					photo ??
+					"https://res.cloudinary.com/dskltx6xi/image/upload/v1694509756/mama_recipe/users/blank_dd1daa.png",
 				role: role ?? 1,
 			};
 
