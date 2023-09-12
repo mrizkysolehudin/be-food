@@ -38,7 +38,9 @@ const findEmail = (email) => {
 };
 
 const deletePhotoUser = (userId) => {
-	return db.query(`UPDATE users SET photo = NULL WHERE user_id=${userId}`);
+	return db.query(
+		`UPDATE users SET photo = "https://res.cloudinary.com/dskltx6xi/image/upload/v1694509756/mama_recipe/users/blank_dd1daa.png" WHERE user_id=${userId}`,
+	);
 };
 
 const countDataUsers = () => {

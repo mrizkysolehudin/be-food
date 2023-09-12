@@ -79,7 +79,9 @@ const userController = {
 				name,
 				email,
 				phone,
-				photo: imageUrl ?? "",
+				photo:
+					imageUrl ??
+					"https://res.cloudinary.com/dskltx6xi/image/upload/v1694509756/mama_recipe/users/blank_dd1daa.png",
 				role: role ?? 1,
 			};
 
