@@ -50,9 +50,9 @@ const recipeController = {
 
 			const data = {
 				title,
-				description,
+				description: description ?? "",
 				image: imageUrl,
-				category_id,
+				category_id: category_id ?? null,
 				ingredients,
 				video,
 				user_id,
