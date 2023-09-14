@@ -1,4 +1,5 @@
--- Active: 1692428075479@@localhost@5432@db_food_recipe
+-- Active: 1692428075479@@localhost@5432@db_copy_fvmdjcku
+
 
 CREATE TABLE users (
   user_id SERIAL PRIMARY KEY,
@@ -48,3 +49,7 @@ JOIN
 	users ON recipe.user_id = users.user_id
 WHERE
 	users.user_id = 27; 
+
+SELECT recipe.recipe_id, recipe.title, recipe.description, users.name as creator, recipe.image,    recipe.ingredients, recipe.video, TO_CHAR(recipe.created_at, 'DD-MM-YYYY HH24:MI:SS') AS created_at 
+	FROM recipe
+	JOIN users ON recipe.user_id = users.user_id;
