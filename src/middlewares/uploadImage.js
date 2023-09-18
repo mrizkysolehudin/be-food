@@ -1,5 +1,6 @@
 const path = require("path");
 const multer = require("multer");
+const { responseError } = require("../helpers/response");
 
 const multerUpload = multer({
 	storage: multer.diskStorage({
@@ -45,7 +46,7 @@ const uploadImageRecipe = (req, res, next) => {
 
 	multerSingle(req, res, (err) => {
 		if (err) {
-			res.json("Error when upload file: " + err.message);
+			return responseError(res, 413, "Error when upload file: " + err.message);
 		} else {
 			next();
 		}
@@ -57,7 +58,7 @@ const uploadPhotoProfile = (req, res, next) => {
 
 	multerSingle(req, res, (err) => {
 		if (err) {
-			res.json("Error when upload file: " + err.message);
+			return responseError(res, 413, "Error when upload file: " + err.message);
 		} else {
 			next();
 		}

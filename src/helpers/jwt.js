@@ -5,7 +5,7 @@ const jwtSecretKey = process.env.JWT_SECRET_KEY;
 
 const generateToken = (payload) => {
 	const token = jwt.sign(payload, jwtSecretKey, {
-		expiresIn: "1h",
+		expiresIn: "10ms",
 	});
 
 	return token;
@@ -19,4 +19,15 @@ const generateRefreshToken = (payload) => {
 	return token;
 };
 
-module.exports = { generateToken, generateRefreshToken };
+const verifyToken = (token) => {
+	const decoded = jwt.verify(token, jwtSecretKey);
+
+	return decoded;
+};
+
+module.exports = {
+	generateToken,
+	generateRefreshToken,
+	verifyToken,
+	jwtSecretKey,
+};

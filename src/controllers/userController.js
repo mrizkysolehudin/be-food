@@ -175,7 +175,8 @@ const userController = {
 					user,
 				};
 				user.token = generateToken(payload);
-				user.refreshToken = generateRefreshToken(payload);
+				const refreshToken = generateRefreshToken(payload);
+				user.refreshToken = refreshToken;
 
 				return response(res, user, 200, "login success");
 			})

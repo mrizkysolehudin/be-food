@@ -1,26 +1,49 @@
 const jwt = require("jsonwebtoken");
 const { responseError } = require("../helpers/response");
+const { jwtSecretKey } = require("../helpers/jwt");
 
 const isLoginAuth = async (req, res, next) => {
 	try {
 		let token;
-
 		if (req.headers.authorization) {
-			token = req.headers.authorization.split(" ")[1];
+			let auth = req.headers.authorization;
+			token = auth.split(" ")[1];
 
-			if (token) {
-				let decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-				req.payload = decoded;
+			let verify = jwt.verify(token, jwtSecretKey);
+			req.payload = verify;
+			next();
+		}
 
-				next();
-			} else {
-				throw new Error("Not authorized token expired. Please login again...");
-			}
-		} else {
-			throw new Error("There is no token attached to the header.");
+		if (!token) {
+			return responseError(res, 400, "access denied");
 		}
 	} catch (error) {
-		return responseError(res, 500, error.message);
+		if (error && error?.name == "JsonWebTokenError") {
+			res.status(404).json({
+				message: "Invalid Token",
+			});
+		} else if (error && error?.name == "TokenExpiredError") {
+			let refreshToken = req?.cookies?.refreshToken;
+
+			if (refreshToken) {
+				jwt.verify(refreshToken, jwtSecretKey, (err, payload) => {
+					if (err) {
+						return responseError(res, 400, "token expired");
+					}
+
+					const newToken = jwt.sign({ payload }, jwtSecretKey);
+					res.setHeader("Authorization", `Bearer ${newToken}`);
+					req.payload = jwt.verify(accessToken, jwtSecretKey);
+					next();
+				});
+			} else {
+				return responseError(
+					res,
+					404,
+					"Refresh token not found. Please login again...",
+				);
+			}
+		}
 	}
 };
 
