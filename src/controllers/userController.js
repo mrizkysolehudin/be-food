@@ -84,7 +84,7 @@ const userController = {
 				name: name ?? currentUser?.name,
 				email: email ?? currentUser?.email,
 				phone: phone ?? currentUser?.phone,
-				photo: imageUrl,
+				photo: imageUrl ?? currentUser?.photo,
 				role: role ?? currentUser?.role,
 			};
 
