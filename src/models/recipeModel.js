@@ -5,7 +5,7 @@ const selectAllRecipes = (search, sort, limit, offset) => {
 	SELECT recipe.recipe_id, recipe.title, recipe.description, category.category_name, users.name as creator, recipe.image,    recipe.ingredients, recipe.video, TO_CHAR(recipe.created_at, 'DD-MM-YYYY HH24:MI:SS') AS created_at 
 	FROM recipe
 	JOIN users ON recipe.user_id = users.user_id
-	JOIN category ON recipe.category_id = category.category_id
+	LEFT JOIN category ON recipe.category_id = category.category_id 
 	WHERE recipe.title ILIKE '%${search}%' 
 	ORDER BY recipe.title ${sort}
 	LIMIT ${limit}

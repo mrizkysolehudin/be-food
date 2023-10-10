@@ -5,9 +5,9 @@ const response = (res, result, status, message, pagination) => {
 		responseData.status = "success";
 	}
 	responseData.statusCode = status;
-	responseData.data = result || null;
 	responseData.message = message || null;
 	responseData.pagination = pagination || {};
+	responseData.data = result || null;
 
 	return res.status(status).json(responseData);
 };
