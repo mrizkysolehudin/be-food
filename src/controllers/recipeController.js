@@ -93,31 +93,40 @@ const recipeController = {
 	updateRecipe: async (req, res) => {
 		try {
 			const recipe_id = req.params.id;
-			const uploadToCloudinary = await cloudinary.uploader.upload(req.file.path, {
-				folder: "mama_recipe/recipe",
-			});
-			if (!uploadToCloudinary) {
-				return responseError(res, 400, "upload image failed");
-			}
 
-			const imageUrl = uploadToCloudinary.secure_url;
+			let imageUrl = "";
+			if (req.file) {
+				const uploadToCloudinary = await cloudinary.uploader.upload(
+					req?.file?.path,
+					{
+						folder: "mama_recipe/recipe",
+					},
+				);
+
+				if (!uploadToCloudinary) {
+					return responseError(res, 400, "upload image failed");
+				}
+				imageUrl = uploadToCloudinary?.secure_url ?? "";
+			}
 
 			const { title, description, category_id, ingredients, video, user_id } =
 				req.body;
 
-			const { rowCount } = await recipeModel.selectRecipe(recipe_id);
+			const { rowCount, rows } = await recipeModel.selectRecipe(recipe_id);
 			if (!rowCount) {
 				return responseError(res, 404, "Recipe id is not found");
 			}
 
+			const currentRecipe = rows[0];
+
 			const data = {
 				recipe_id,
-				title,
-				description,
-				image: imageUrl,
-				category_id,
-				video,
-				ingredients,
+				title: title ?? currentRecipe?.title,
+				description: description ?? currentRecipe?.description,
+				image: imageUrl ?? currentRecipe?.image,
+				category_id: category_id ?? currentRecipe?.category_id,
+				video: video ?? currentRecipe?.video,
+				ingredients: ingredients ?? currentRecipe?.ingredients,
 				user_id,
 			};
 
