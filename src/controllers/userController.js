@@ -57,17 +57,20 @@ const userController = {
 			const user_id = req.params.id;
 			const { name, email, phone, role } = req.body;
 
-			const uploadToCloudinary = await cloudinary.uploader.upload(
-				req?.file?.path,
-				{
-					folder: "mama_recipe/users",
-				},
-			);
-			if (!uploadToCloudinary) {
-				return responseError(res, 400, "upload image failed");
-			}
+			let imageUrl = "";
+			if (req.file) {
+				const uploadToCloudinary = await cloudinary.uploader.upload(
+					req?.file?.path,
+					{
+						folder: "mama_recipe/users",
+					},
+				);
 
-			const imageUrl = uploadToCloudinary.secure_url;
+				if (!uploadToCloudinary) {
+					return responseError(res, 400, "upload image failed");
+				}
+				imageUrl = uploadToCloudinary?.secure_url ?? "";
+			}
 
 			const { rowCount, rows } = await userModel.selectUser(user_id);
 			if (!rowCount) {
@@ -81,7 +84,7 @@ const userController = {
 				name: name ?? currentUser?.name,
 				email: email ?? currentUser?.email,
 				phone: phone ?? currentUser?.phone,
-				photo: imageUrl ?? currentUser?.photo,
+				photo: imageUrl,
 				role: role ?? currentUser?.role,
 			};
 
