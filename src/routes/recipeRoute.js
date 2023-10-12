@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const recipeController = require("../controllers/recipeController.js");
-const { uploadImageAndVideoRecipe } = require("../middlewares/uploadImage.js");
 const {
 	isLoginAuth,
 	userRoleAuth,
 } = require("../middlewares/authMiddleware.js");
+const {
+	uploadImageAndVideoRecipe,
+} = require("../middlewares/uploadImageAndVideo.js");
 
 router
 	.get("/", recipeController.getAllRecipes)

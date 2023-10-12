@@ -109,23 +109,38 @@ const recipeController = {
 		try {
 			const recipe_id = req.params.id;
 
-			let imageUrl = "";
-			if (req.file) {
-				const uploadToCloudinary = await cloudinary.uploader.upload(
-					req?.file?.path,
-					{
-						folder: "mama_recipe/recipe",
-					},
-				);
-
-				if (!uploadToCloudinary) {
-					return responseError(res, 400, "upload image failed");
-				}
-				imageUrl = uploadToCloudinary?.secure_url ?? "";
-			}
-
 			const { title, description, category_id, ingredients, video, user_id } =
 				req.body;
+
+			let imageUrl = "";
+			if (req.files.image) {
+				const uploadImageToCloudinary = await cloudinary.uploader.upload(
+					req.files?.image?.[0].path,
+					{
+						folder: "mama_recipe/recipe",
+						resource_type: "image",
+					},
+				);
+				if (!uploadImageToCloudinary) {
+					return responseError(res, 400, "upload image failed");
+				}
+				imageUrl = uploadImageToCloudinary?.secure_url ?? "";
+			}
+
+			let videoUrl = "";
+			if (req.files.video) {
+				const uploadVideoToCloudinary = await cloudinary.uploader.upload(
+					req.files?.video?.[0].path,
+					{
+						folder: "mama_recipe/recipe/video",
+						resource_type: "video",
+					},
+				);
+				if (!uploadVideoToCloudinary) {
+					return responseError(res, 400, "upload video failed");
+				}
+				videoUrl = uploadVideoToCloudinary?.secure_url ?? "";
+			}
 
 			const { rowCount, rows } = await recipeModel.selectRecipe(recipe_id);
 			if (!rowCount) {
@@ -140,7 +155,7 @@ const recipeController = {
 				description: description ?? currentRecipe?.description,
 				image: imageUrl ?? currentRecipe?.image,
 				category_id: category_id ?? currentRecipe?.category_id,
-				video: video ?? currentRecipe?.video,
+				video: videoUrl ?? video ?? currentRecipe?.video,
 				ingredients: ingredients ?? currentRecipe?.ingredients,
 				user_id,
 			};
