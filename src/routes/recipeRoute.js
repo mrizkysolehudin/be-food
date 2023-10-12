@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const recipeController = require("../controllers/recipeController.js");
-const { uploadImageRecipe } = require("../middlewares/uploadImage.js");
+const { uploadImageAndVideoRecipe } = require("../middlewares/uploadImage.js");
 const {
 	isLoginAuth,
 	userRoleAuth,
@@ -13,11 +13,16 @@ router
 		"/",
 		isLoginAuth,
 		userRoleAuth,
-		uploadImageRecipe,
+		uploadImageAndVideoRecipe,
 		recipeController.createRecipe,
 	)
 	.get("/:id", recipeController.getRecipe)
-	.put("/:id", isLoginAuth, uploadImageRecipe, recipeController.updateRecipe)
+	.put(
+		"/:id",
+		isLoginAuth,
+		uploadImageAndVideoRecipe,
+		recipeController.updateRecipe,
+	)
 	.delete("/:id", isLoginAuth, recipeController.deleteRecipe)
 	.get("/user-recipes/:user_id", recipeController.getRecipesUserByUserId);
 

@@ -40,18 +40,33 @@ const recipeController = {
 				req.body;
 
 			let imageUrl = "";
-			if (req.file) {
-				const uploadToCloudinary = await cloudinary.uploader.upload(
-					req?.file?.path,
+			if (req.files.image) {
+				const uploadImageToCloudinary = await cloudinary.uploader.upload(
+					req.files?.image?.[0].path,
 					{
 						folder: "mama_recipe/recipe",
+						resource_type: "image",
 					},
 				);
-
-				if (!uploadToCloudinary) {
+				if (!uploadImageToCloudinary) {
 					return responseError(res, 400, "upload image failed");
 				}
-				imageUrl = uploadToCloudinary?.secure_url ?? "";
+				imageUrl = uploadImageToCloudinary?.secure_url ?? "";
+			}
+
+			let videoUrl = "";
+			if (req.files.video) {
+				const uploadVideoToCloudinary = await cloudinary.uploader.upload(
+					req.files?.video?.[0].path,
+					{
+						folder: "mama_recipe/recipe/video",
+						resource_type: "video",
+					},
+				);
+				if (!uploadVideoToCloudinary) {
+					return responseError(res, 400, "upload video failed");
+				}
+				videoUrl = uploadVideoToCloudinary?.secure_url ?? "";
 			}
 
 			const data = {
@@ -60,7 +75,7 @@ const recipeController = {
 				image: imageUrl,
 				category_id: category_id ?? null,
 				ingredients,
-				video,
+				video: videoUrl ?? video,
 				user_id,
 			};
 
