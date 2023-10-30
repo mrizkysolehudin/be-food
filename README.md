@@ -1,5 +1,5 @@
-<div align="center" height="200" width="300" style="background-color: black; padding: 20px;">
- <img height="150" width="250" src="https://github.com/mrizkysolehudin/fe-recipe-rtk/blob/master/public/assets/images/logo.png"  />
+<div align="center">
+ <img height="150" width="250" src="https://github.com/mrizkysolehudin/fe-recipe-rtk/blob/master/public/assets/images/logo-bgyellow.png"  />
 </div>
 
 # Recipe Backend Application
