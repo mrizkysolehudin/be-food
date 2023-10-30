@@ -83,7 +83,7 @@ Start the project
 
 ⚡[`Backend Recipe`](https://github.com/mrizkysolehudin/be-recipe)⚡
 
-⚡[`Frontend Web Recipe`](https://github.com/mrizkysolehudin/fe-peworld-rtk)⚡
+⚡[`Frontend Web Recipe`](https://github.com/mrizkysolehudin/fe-recipe-rtk)⚡
 
 ⚡[`Frontend Mobile Recipe`](https://github.com/mrizkysolehudin/fe_recipe_rtk_reactnative)⚡
 
