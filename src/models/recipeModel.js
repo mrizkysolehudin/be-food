@@ -2,7 +2,7 @@ const db = require("../configs/db");
 
 const selectAllRecipes = (search, sort, limit, offset) => {
 	return db.query(` 
-	SELECT recipe.recipe_id, recipe.title, recipe.description, category.category_name, users.name as creator, recipe.image,    recipe.ingredients, recipe.video, TO_CHAR(recipe.created_at, 'DD-MM-YYYY HH24:MI:SS') AS created_at 
+	SELECT recipe.recipe_id, recipe.title, users.name AS creator, recipe.description, category.category_name, users.name as creator, recipe.image,    recipe.ingredients, recipe.video, TO_CHAR(recipe.created_at, 'DD-MM-YYYY HH24:MI:SS') AS created_at 
 	FROM recipe
 	JOIN users ON recipe.user_id = users.user_id
 	LEFT JOIN category ON recipe.category_id = category.category_id 
