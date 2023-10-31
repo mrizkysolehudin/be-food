@@ -79,6 +79,8 @@ Start the project
 
 💻 [Muchammad Rizky Solehudin](https://github.com/mrizkysolehudin)
 
+<br />
+
 ## Related Project
 
 ⚡[`Backend Recipe`](https://github.com/mrizkysolehudin/be-recipe)⚡
