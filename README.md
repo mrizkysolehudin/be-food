@@ -17,19 +17,19 @@ Recipe Application, the best platform for uncovering a variety of delicious reci
 ## Package dependencies
 
 ```bash
-		"express": "^4.18.2",
-		"pg": "^8.11.3",
-		"cloudinary": "^1.40.0",
-		"multer": "^1.4.5-lts.1",
+"express": "^4.18.2",
+"pg": "^8.11.3",
+"cloudinary": "^1.40.0",
 
-        "bcryptjs": "^2.4.3",
-		"jsonwebtoken": "^9.0.1",
-		"cookie-parser": "^1.4.6",
-		"cors": "^2.8.5",
-		"dotenv": "^16.3.1",
-		"helmet": "^7.0.0",
-		"redis": "^4.6.8",
-		"xss-clean": "^0.1.4"
+"multer": "^1.4.5-lts.1",
+"bcryptjs": "^2.4.3",
+"jsonwebtoken": "^9.0.1",
+"cookie-parser": "^1.4.6",
+"cors": "^2.8.5",
+"dotenv": "^16.3.1",
+"helmet": "^7.0.0",
+"redis": "^4.6.8",
+"xss-clean": "^0.1.4"
 ```
 
 ## Environment Variables
@@ -87,4 +87,6 @@ Start the project
 
 ⚡[`Frontend Mobile Recipe`](https://github.com/mrizkysolehudin/fe_recipe_rtk_reactnative)⚡
 
-⚡[`Live Demo Recipe`](https://master--fe-recipe-versi2.netlify.app/)⚡
+⚡[`Demo Web`](https://master--fe-recipe-versi2.netlify.app/)⚡
+
+⚡[`Demo Mobile`](https://drive.google.com/drive/folders/1zDYfLxeZS6YwljQZVvuMwKAlLHssGV2Y?usp=sharing)⚡
