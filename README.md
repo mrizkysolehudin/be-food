@@ -84,6 +84,10 @@ Start the project
   npm start
 ```
 
+## Postman
+
+⚡[`Dokumentasi Postman`](https://documenter.getpostman.com/view/23681909/2s9YXcdQap)⚡
+
 ## Author
 
 💻 [Muchammad Rizky Solehudin](https://github.com/mrizkysolehudin)
