@@ -10,10 +10,10 @@ Recipe Application, the best platform for uncovering a variety of delicious reci
 
 ## Features
 
-- Users can create and share their own recipes.
-- Users can edit and delete recipes they have created.
-- Users can browse recipes created by other users.
-- Users can watch video tutorials on how to cook following a recipe.
+- Users can create and share their own recipes
+- Users can edit and delete recipes they have created
+- Users can browse recipes created by other users
+- Users can watch video tutorials on how to cook following a recipe
 - Users can add pictures and videos with mobile phone camera (only Mobile)
 - Has notification feature (only Mobile)
 
